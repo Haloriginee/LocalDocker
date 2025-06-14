@@ -1,8 +1,18 @@
+import { Header } from 'components'
 import React from 'react'
 
 const AllUsers = () => {
+
   return (
-    <div>all-users</div>
+
+    <main className='dashboard wrapper'>
+      <Header
+        title="Trips"
+        description="Track activity in real time"
+      />
+      All Users Page Contents
+    </main>
+
   )
 }
 
