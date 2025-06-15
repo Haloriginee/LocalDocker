@@ -2,12 +2,13 @@ import { ComboBoxComponent } from '@syncfusion/ej2-react-dropdowns';
 import { Header } from 'components'
 import React, { useState } from 'react'
 import type { Route } from './+types/create-trip';
-import { comboBoxItems, selectItems } from '~/constants';
+import { comboBoxItems, interests, selectItems, travelStyles } from '~/constants';
 import { cn, formatKey } from '~/lib/utils';
 import { Coordinate, LayerDirective, LayersDirective, MapsComponent } from '@syncfusion/ej2-react-maps';
 import { world_map } from '~/constants/world_map';
 import { ButtonComponent } from '@syncfusion/ej2-react-buttons';
 import { account } from '~/appwrite/client';
+import { useNavigate } from 'react-router';
 
 export const loader = async () => {
 
@@ -28,6 +29,8 @@ export const loader = async () => {
 const CreateTrip = ({loaderData}: Route.ComponentProps) => {
 
   const countries = loaderData as Country[];
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<TripFormData>({
 
@@ -50,7 +53,7 @@ const CreateTrip = ({loaderData}: Route.ComponentProps) => {
 
     if(
 
-      !formData.country || !formData.travelStyle || formData.interest || formData.duration || formData.groupType || formData.budget
+      !formData.country || !formData.travelStyle || !formData.interest || !formData.groupType || !formData.budget
 
     ) {
 
@@ -79,6 +82,29 @@ const CreateTrip = ({loaderData}: Route.ComponentProps) => {
     }
 
     try {
+
+      const response = await fetch("/api/create-trip", {
+
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+
+          userId: user.$id,
+          country: formData.country,
+          numberOfDays: formData.duration,
+          travelStyle: formData.travelStyle,
+          budget: formData.budget,
+          interests: formData.interest,
+          groupType: formData.groupType,
+
+        })
+
+      });
+
+      const result: CreateTripResponse = await response.json();
+
+      if(result?.id) navigate(`/trips/${result.id}`);
+      else console.error( "Ai Failed")
 
     } catch (e) {
 
