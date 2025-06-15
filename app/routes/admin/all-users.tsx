@@ -1,11 +1,21 @@
 import { Header } from 'components'
 import React from 'react'
 import {ColumnsDirective, ColumnDirective, GridComponent} from "@syncfusion/ej2-react-grids";
-import { users } from '~/constants';
-import { cn } from '~/lib/utils';
+import { cn, formatDate } from '~/lib/utils';
+import { getAllUsers } from '~/appwrite/auth';
+import type { Route } from './+types/all-users';
 
+export const loader = async () => {
 
-const AllUsers = () => {
+  const { users, total } = await getAllUsers( 10, 0 );
+
+  return {users, total};
+
+}
+
+const AllUsers = ({ loaderData }: Route.ComponentProps) => {
+
+  const {users} = loaderData ;
 
   return (
 
@@ -40,15 +50,16 @@ const AllUsers = () => {
           <ColumnDirective
             field='email'
             headerText='Email'
-            width="150"
+            width="200"
             textAlign='Left'
           />
 
           <ColumnDirective
-            field='dateJoined'
+            field='joinedAt'
             headerText='Date Joined'
-            width="120"
+            width="140"
             textAlign='Left'
+            template={({joinedAt}: {joinedAt: string}) => formatDate(joinedAt)}
           />
 
           <ColumnDirective
@@ -75,10 +86,8 @@ const AllUsers = () => {
             )}
           />
 
-
         </ColumnsDirective>
       </GridComponent>
-
     </main>
   )
 }
