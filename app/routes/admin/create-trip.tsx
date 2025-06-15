@@ -3,10 +3,11 @@ import { Header } from 'components'
 import React, { useState } from 'react'
 import type { Route } from './+types/create-trip';
 import { comboBoxItems, selectItems } from '~/constants';
-import { formatKey } from '~/lib/utils';
+import { cn, formatKey } from '~/lib/utils';
 import { Coordinate, LayerDirective, LayersDirective, MapsComponent } from '@syncfusion/ej2-react-maps';
 import { world_map } from '~/constants/world_map';
 import { ButtonComponent } from '@syncfusion/ej2-react-buttons';
+import { account } from '~/appwrite/client';
 
 export const loader = async () => {
 
@@ -42,9 +43,52 @@ const CreateTrip = ({loaderData}: Route.ComponentProps) => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
+    e.preventDefault();
+    setLoading(true);
 
+    if(
+
+      !formData.country || !formData.travelStyle || formData.interest || formData.duration || formData.groupType || formData.budget
+
+    ) {
+
+      setError("Please Fill all Fields");
+      setLoading(false)
+      return;
+
+    }
+
+    if(formData.duration < 1 || formData.duration > 10) {
+
+      setError("Duration must be between 1 to 10 Days");
+      setLoading(false)
+      return;
+
+    }
+
+    const user = await account.get();
+
+    if(!user.$id) {
+
+      console.error("User Not Authenticated");
+      setLoading(false);
+      return;
+
+    }
+
+    try {
+
+    } catch (e) {
+
+      console.error("Failed to Generate a Trip", error)
+
+    } finally {
+
+      setLoading(false);
+
+    }
 
   };
 
@@ -212,6 +256,7 @@ const CreateTrip = ({loaderData}: Route.ComponentProps) => {
             >
               <img
                 src={`/assets/icons/${loading ? "loader.svg" : "magic-star.svg"}`}
+                className={cn("size-5", {"animate-spin": loading})}
               />
               <span className='p-16-semibold text-white'>
                 {loading ? "Generating" : "Generate Trip"}
