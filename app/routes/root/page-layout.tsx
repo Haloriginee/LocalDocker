@@ -6,36 +6,44 @@ const PageLayout = () => {
 
   const navigate = useNavigate();
 
-    const handleLogout = async () => {
-
-      await logoutUser();
-      navigate("/sign-in")
-
-    }
 
   return (
 
-    <div>
-      <button
-        className="cursor-pointer"
-        onClick={handleLogout}
-      >
-        <img
-          src="/assets/icons/logout.svg"
-          alt="logout"
-          className="size-6"
-        />
-      </button>
+    <main className='auth'>
+      <section className='size-full glassmorphism flex-center px-6'>
 
-      <button
-        onClick={() => {navigate("/dashboard")}}
-      >
-        Dashboard
-      </button>
+        <div className='sign-in-card'>
+          <button
+            className='button-class !h-11 !w-full cursor-pointer p-18-semibold text-white'
+            onClick={() => {navigate("/dashboard")}}
+            >
+            DashBoard
+          </button>
+        </div>
 
-    </div>
+      </section>
+    </main>
 
-  )
+
+)
 }
 
 export default PageLayout
+
+/*     <button
+className="cursor-pointer"
+onClick={handleLogout}
+>
+<img
+src="/assets/icons/logout.svg"
+alt="logout"
+className="size-6"
+/>
+</button> */
+
+/*const handleLogout = async () => {
+
+  await logoutUser();
+  navigate("/sign-in")
+
+}*/
