@@ -27,7 +27,7 @@ const StatsCard = ({ headerTitle, total, lastMonthCount, currentMonthCount }: St
                 className='size-5'
               />
 
-              <figcaption className={cn('text-sm font-medim', isDecrement ? 'text-red-500': "text-success-700")}>
+              <figcaption className={cn('text-sm font-medium', isDecrement ? 'text-red-500': "text-success-700")}>
                 {Math.round(percentage)}%
               </figcaption>
 
