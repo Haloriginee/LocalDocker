@@ -27,9 +27,11 @@ export const clientLoader = async () => {
   ])
 
   const allTrips = trips.allTrips.map(({ $id, tripDetail, imageUrls }) => ({
+
         id: $id,
         ...parseTripData(tripDetail),
         imageUrls: imageUrls ?? []
+
       }))
 
   const mappedUsers : UsersItineraryCount[] = allUsers.users.map((user) => ({
@@ -211,14 +213,18 @@ const dashboard = ({ loaderData }:  Route.ComponentProps) => {
                   width="200"
                   textAlign="Left"
                   template={(props: UserData) => (
+
                     <div className='flex items-center gap-1.5 px-4'>
                       <img
                         src={props.imageUrl}
                         alt='user'
                         className='rounded-full size-8 aspect-square'
                       />
-                      <span>{props.name}</span>
+                      <span>
+                        {props.name}
+                      </span>
                     </div>
+
                   )}
                 />
                 <ColumnDirective

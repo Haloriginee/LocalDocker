@@ -7,10 +7,10 @@ import { useNavigate } from "react-router";
 
 export async function loader() {
 
-  try {
+ try {
 
     const user = await account.get();
-    if (user?.$id) return redirect("/dashboard");
+    if (user?.$id) return redirect("/dashboard"); // ✅ Correct path
     return null;
 
   } catch {
@@ -57,7 +57,9 @@ const SignIn = () => {
                 className="size-[30px]"
               />
             </Link>
-            <h1 className="p-28-bold text-dark-100">Solarice</h1>
+            <h1 className="p-28-bold text-dark-100">
+              Solarice
+            </h1>
           </header>
 
           <article>
@@ -70,7 +72,9 @@ const SignIn = () => {
           </article>
 
           {error && (
+
             <p className="text-red-500 text-center mb-4">{error}</p>
+
           )}
 
           <ButtonComponent
