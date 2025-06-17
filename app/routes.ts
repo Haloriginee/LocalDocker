@@ -2,6 +2,7 @@ import { type RouteConfig, route, layout, index } from "@react-router/dev/routes
 
 export default [
 
+  route("/", "routes/root/travel-page.tsx" ),
   route("sign-in", "routes/root/sign-in.tsx"),
   route("api/create-trip", "routes/api/create-trip.ts"),
 
@@ -18,7 +19,6 @@ export default [
 
   layout("routes/root/page-layout.tsx", [
 
-    index("routes/root/travel-page.tsx")
 
   ])
 

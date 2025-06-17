@@ -1,12 +1,22 @@
-import React from 'react'
+import { redirect } from "react-router";
+import { account } from "~/appwrite/client";
 
-const TravelPage = () => {
+export async function loader() {
 
-  return (
+  try
+  {
+    const user = await account.get();
+    return user?.$id ? redirect("/dashboard") : redirect("/sign-in");
 
-    <div>TravelPage</div>
+  } catch {
 
-  )
+    return redirect("/sign-in");
+
+  }
 }
 
-export default TravelPage
+export default  function TravelPage() {
+
+  return null;
+
+}
